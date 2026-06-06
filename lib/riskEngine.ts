@@ -11,6 +11,7 @@
 //   MED-001 medication missed 2 days in a row                 → review_today
 //   BP-001  systolic > 180 OR diastolic > 110                 → escalate
 //   ACT-001 steps > 40% below baseline for 3 days             → watch
+//   SYM-001 patient reports breathlessness / swelling / chest → review_today
 //
 // Windows are CALENDAR-DATE aware (not array-index based) and thresholds compare
 // the true value (rounding is only for the human-readable evidence string), so
@@ -44,6 +45,7 @@ const REASON_TAG: Record<string, string> = {
   "MED-001": "missed meds",
   "BP-001": "high BP",
   "ACT-001": "low activity",
+  "SYM-001": "symptoms reported",
 };
 
 const RECOMMENDED_ACTION: Record<Severity, string> = {
@@ -193,6 +195,25 @@ export function evaluateRisk(
         severity: "watch",
         description: "Reduced activity may signal deterioration or frailty risk.",
         evidence: `Activity averaged ${avg} steps over ${ACT_DAYS} days, ~${dropPct}% below the ${patient.baseline_steps} baseline.`,
+      });
+    }
+  }
+
+  // --- SYM-001: patient reports a red-flag symptom (any condition) ---
+  // Catches symptomatic patients whose other rules (weight/BP/activity) don't
+  // fire — e.g. a COPD patient reporting breathlessness with stable weight.
+  if (latestCheckin) {
+    const reported: string[] = [];
+    if (latestCheckin.shortness_of_breath) reported.push("shortness of breath");
+    if (latestCheckin.swelling) reported.push("swelling in legs/feet");
+    if (latestCheckin.chest_discomfort) reported.push("chest discomfort");
+    if (reported.length > 0) {
+      matched.push({
+        code: "SYM-001",
+        severity: "review_today",
+        description:
+          "Patient reported symptoms that warrant nurse review, regardless of condition.",
+        evidence: `Reported ${reported.join(", ")} on ${latestCheckin.date}.`,
       });
     }
   }

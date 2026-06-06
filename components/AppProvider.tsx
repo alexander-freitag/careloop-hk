@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import type { AuditEvent, PatientRow, RiskAlert } from "@/lib/types";
@@ -80,6 +80,14 @@ export function AppProvider({
     } finally {
       setBusy(false);
     }
+  }, [refresh]);
+
+  // Live demo: poll so the dashboard/alerts update when WhatsApp messages arrive.
+  useEffect(() => {
+    const t = setInterval(() => {
+      void refresh();
+    }, 5000);
+    return () => clearInterval(t);
   }, [refresh]);
 
   return (
