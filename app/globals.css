@@ -43,43 +43,43 @@
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-2xl: calc(var(--radius) * 1.6);
 }
 
 /* CareLoop HK — clean clinical light theme: soft blue/green healthcare accents */
 :root {
-  --background: oklch(0.992 0.004 220);
-  --foreground: oklch(0.3 0.024 248);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.3 0.024 248);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.3 0.024 248);
-  --primary: oklch(0.56 0.082 199);
-  --primary-foreground: oklch(0.99 0.01 199);
-  --secondary: oklch(0.962 0.012 214);
-  --secondary-foreground: oklch(0.33 0.03 245);
-  --muted: oklch(0.966 0.008 220);
-  --muted-foreground: oklch(0.52 0.02 246);
-  --accent: oklch(0.95 0.03 194);
-  --accent-foreground: oklch(0.36 0.05 208);
-  --destructive: oklch(0.58 0.21 25);
-  --border: oklch(0.918 0.008 220);
-  --input: oklch(0.918 0.008 220);
-  --ring: oklch(0.56 0.082 199);
-  --chart-1: oklch(0.6 0.1 199);
-  --chart-2: oklch(0.6 0.13 250);
-  --chart-3: oklch(0.76 0.15 70);
-  --chart-4: oklch(0.7 0.15 150);
-  --chart-5: oklch(0.6 0.15 300);
-  --radius: 0.7rem;
-  --sidebar: oklch(0.985 0.005 220);
-  --sidebar-foreground: oklch(0.3 0.024 248);
-  --sidebar-primary: oklch(0.56 0.082 199);
-  --sidebar-primary-foreground: oklch(0.99 0.01 199);
-  --sidebar-accent: oklch(0.95 0.03 194);
-  --sidebar-accent-foreground: oklch(0.36 0.05 208);
-  --sidebar-border: oklch(0.918 0.008 220);
-  --sidebar-ring: oklch(0.56 0.082 199);
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f766e;
+  --primary-foreground: #f8fafc;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #e6f2f1;
+  --accent-foreground: #115e59;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0f766e;
+  --chart-1: #0f766e;
+  --chart-2: #2563eb;
+  --chart-3: #d97706;
+  --chart-4: #16a34a;
+  --chart-5: #475569;
+  --radius: 0.875rem;
+  --sidebar: #f8fafc;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0f766e;
+  --sidebar-primary-foreground: #f8fafc;
+  --sidebar-accent: #e6f2f1;
+  --sidebar-accent-foreground: #115e59;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0f766e;
 }
 
 .dark {
@@ -112,6 +112,12 @@
   }
   html {
     @apply font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.03em;
   }
 }
 

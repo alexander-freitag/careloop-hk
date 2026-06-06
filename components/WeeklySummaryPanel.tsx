@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FileText, Download, Sparkles, RefreshCw } from "lucide-react";
+import { FileText, Download, PenLine, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
@@ -42,7 +42,7 @@ export function WeeklySummaryPanel({
   }
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
+    <div className="rounded-2xl border border-border bg-card p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <FileText className="size-4 text-primary" />
@@ -56,14 +56,14 @@ export function WeeklySummaryPanel({
                   : "border-border bg-muted text-muted-foreground",
               )}
             >
-              {summary.generated_by === "ai" && <Sparkles className="size-3" />}
+              {summary.generated_by === "ai" && <PenLine className="size-3" />}
               {summary.generated_by === "ai" ? "AI-assisted wording" : "Deterministic template"}
             </span>
           )}
         </div>
         <div className="flex gap-2">
           <Button size="sm" onClick={generate} disabled={busy} className="gap-1.5">
-            {summary ? <RefreshCw className="size-4" /> : <Sparkles className="size-4" />}
+            {summary ? <RefreshCw className="size-4" /> : <PenLine className="size-4" />}
             {busy ? "Generating…" : summary ? "Regenerate" : "Generate summary"}
           </Button>
           <a
