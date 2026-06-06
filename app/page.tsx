@@ -68,8 +68,8 @@ export default function Landing() {
             Remote chronic-care monitoring for elderly patients between visits
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-muted-foreground">
-            Daily Cantonese check-ins, wearable and vital signals, and deterministic escalation
-            rules — turned into a nurse dashboard, caregiver alerts, and a weekly clinician summary.
+            Daily Cantonese check-ins + wearable/vital signals + deterministic escalation rules +
+            nurse dashboard + weekly clinician summary.
           </p>
 
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">

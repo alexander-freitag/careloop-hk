@@ -5,22 +5,24 @@
 No. CareLoop does not diagnose or prescribe. It uses deterministic monitoring rules to flag when a
 nurse or clinician should review a patient.
 
-### What is real vs mocked?
+### What is real?
 
-Real: the dashboard, check-in simulation, rule engine, alert queue, caregiver alerts, summary
-generation, PDF export, FHIR-style export, and audit trail. Mocked: real Twilio calls, device/EHR/
-eHealth+ integration, and clinical validation. See `HONESTY.md` and the in-app Honesty page.
+The dashboard, check-in simulation, rule engine, alert queue, summary generation, PDF export, and
+FHIR-style export are real. Hospital/eHealth integration is mocked. See `HONESTY.md` and the
+in-app Honesty page for the full split.
 
 ### Who pays?
 
-Care agencies, elderly-care operators, private clinics, NGOs, and insurers managing chronic-care
-populations.
+Care agencies, elderly-care operators, private clinics, NGOs, and insurers.
 
 ### What breaks at scale?
 
-False alarms, incomplete data, device fragmentation, and clinical liability. We handle this with
-conservative thresholds, a data-completeness score, human-in-the-loop nurse review, an audit trail,
-FHIR-style exports, and no diagnosis or treatment recommendations.
+False alarms, incomplete data, device fragmentation, and clinical liability.
+
+### How do we handle it?
+
+Conservative rules, nurse review, data completeness scoring, audit logs, and no diagnosis or
+treatment recommendations.
 
 ### Why Hong Kong?
 

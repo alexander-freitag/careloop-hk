@@ -5,7 +5,7 @@ Read at a calm, confident pace. ~280 words ≈ 2 minutes.
 ---
 
 Hong Kong's population is ageing, and chronic disease management is becoming a system-level
-pressure. But many elderly patients are only reviewed months later — unless they deteriorate badly
+pressure. But many elderly patients are only reviewed months later, unless they deteriorate badly
 enough to seek urgent care.
 
 The dangerous part is the gap between visits.
@@ -17,19 +17,14 @@ It is not an AI doctor. It does not diagnose or prescribe. It flags monitoring r
 clinician review.
 
 In our demo, Mrs. Chan is a 78-year-old heart-failure and hypertension patient. She reports
-shortness of breath and swelling, her weight has increased by more than 2 kilograms in three days,
-and she missed medication.
+shortness of breath and swelling, her weight has increased by more than 2 kg in three days, and
+she missed medication.
 
-CareLoop matches explainable rules — HF-001 and HF-002 — creates an alert, and moves her into the
-nurse review queue.
+CareLoop matches explainable rules, creates an alert, and moves her into the nurse review queue.
 
-The nurse can acknowledge the alert, notify the family with a plain-language message in English or
-Traditional Chinese, and generate a weekly clinician summary. The platform also exports a PDF and a
-FHIR-style JSON bundle, so the information can fit into clinical workflows instead of becoming
-another isolated app.
-
-The risk logic is deterministic and auditable. AI is used only where it is safe — to reword
-summaries for caregivers and clinicians.
+The nurse can acknowledge the alert, notify family, and generate a weekly clinician summary. The
+platform also exports a PDF and a FHIR-style JSON bundle, so the information can fit into clinical
+workflows.
 
 Our first buyers would be elderly-care operators, care agencies, private clinics, insurers, and NGOs
 managing chronic-care populations.

@@ -36,7 +36,7 @@ export function SafetyBanner({ className }: { className?: string }) {
     >
       <Info className="mt-0.5 size-4 shrink-0" />
       <p>
-        CareLoop flags monitoring risks for professional review. It does not diagnose or prescribe.
+        CareLoop does not diagnose or prescribe. It flags monitoring risks for professional review.
       </p>
     </div>
   );
