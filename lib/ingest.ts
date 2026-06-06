@@ -112,25 +112,28 @@ export async function ingestCheckInMessage(input: IngestInput): Promise<IngestRe
     severity_after: result.risk.severity,
   });
 
-  // 5. deterministic policy: red flag escalates now; else ask for missing info
-  const redFlag = SEVERITY_ORDER[result.risk.severity] >= SEVERITY_ORDER.review_today;
+  // 5. policy: finish the WHOLE check-in first. Keep asking the still-missing
+  // required fields (empathetically), and only close once the form is complete.
+  // Severity is recomputed every message, so the nurse alert fires immediately
+  // regardless — but the conversation keeps its red thread and gathers everything
+  // before wrapping up, instead of cutting off after the first red-flag symptom.
   let reply: string;
-  if (redFlag) {
-    session.status = "escalated";
-    session.pending_field = null;
-    reply = await generateConfirmation("escalated", language, patient.name, result.risk.reason_tags);
+  const missing = missingFields(session);
+  if (missing.length > 0) {
+    const field = missing[0];
+    session.pending_field = field;
+    session.status = "in_progress";
+    reply = await generateFollowUp(field, language, patient.name, transcript);
   } else {
-    const missing = missingFields(session);
-    if (missing.length > 0) {
-      const field = missing[0];
-      session.pending_field = field;
-      session.status = "in_progress";
-      reply = await generateFollowUp(field, language, patient.name);
-    } else {
-      session.status = "complete";
-      session.pending_field = null;
-      reply = await generateConfirmation("complete", language, patient.name, []);
-    }
+    const redFlag = SEVERITY_ORDER[result.risk.severity] >= SEVERITY_ORDER.review_today;
+    session.status = redFlag ? "escalated" : "complete";
+    session.pending_field = null;
+    reply = await generateConfirmation(
+      redFlag ? "escalated" : "complete",
+      language,
+      patient.name,
+      result.risk.reason_tags,
+    );
   }
 
   // 6. persist the updated session, then log the outbound reply

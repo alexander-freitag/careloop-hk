@@ -43,8 +43,8 @@ export async function sendDailyCheckIn(patientId: string): Promise<DailyCheckInR
 
   const zh = zhName(patient.name);
   const prompt =
-    `早晨，${zh}！🌅 係時候做你今日嘅每日報到喇。今日覺得點呀？😊\n\n` +
-    `Good morning, ${patient.name}! 🌅 Time for your daily check-in. How are you feeling today?`;
+    `早晨，${zh}。係時候做你今日嘅每日報到。今日覺得點呀？\n\n` +
+    `Good morning, ${patient.name}. It is time for your daily check-in. How are you feeling today?`;
 
   const sent = await sendWhatsApp(to, prompt);
   if (!sent.ok) return { ok: false, error: sent.error };

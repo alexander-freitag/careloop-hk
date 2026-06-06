@@ -12,6 +12,7 @@ export async function generateFollowUp(
   field: FieldKey,
   lang: Lang,
   patientName: string,
+  patientSaid?: string,
 ): Promise<string> {
   const fallback = FIELD_QUESTION[field][lang];
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -26,17 +27,20 @@ export async function generateFollowUp(
         : "plain English";
     const msg = await client.messages.create({
       model,
-      max_tokens: 120,
+      max_tokens: 180,
       system: [
         {
           type: "text",
-          text: `You are CareLoop, a warm daily check-in assistant messaging an elderly Hong Kong patient on WhatsApp. Ask exactly ONE short, friendly follow-up question to learn the missing info. One sentence, caring tone, no medical advice, no diagnosis. Write in ${langName}. Output only the question.`,
+          text: `You are CareLoop, a daily check-in assistant messaging an elderly Hong Kong patient on WhatsApp. Calm, warm, but PROFESSIONAL and concise — this is a healthcare check-in, not a casual chat.
+FIRST, briefly and sincerely acknowledge how the patient feels — especially if they sound distressed or very unwell (one short line). Never be cheerful or dismissive in the face of distress.
+THEN ask ONE short question to learn the one missing piece of info.
+Rules: 1-2 short sentences total. NO emojis. No effusive or over-cheerful language, no false reassurance, no diagnosis, no medical advice, no medication instructions. Write in ${langName}. Output only the message.`,
         },
       ],
       messages: [
         {
           role: "user",
-          content: `Patient: ${patientName}. We still need to know: "${FIELD_QUESTION[field].en}". Write the single follow-up question.`,
+          content: `Patient: ${patientName}.${patientSaid ? ` They just messaged: "${patientSaid}".` : ""} The one thing we still need to know: "${FIELD_QUESTION[field].en}". Write the reply — acknowledge what they said, then ask.`,
         },
       ],
     });
@@ -55,12 +59,12 @@ export async function generateFollowUp(
 export function confirmationReply(status: "escalated" | "complete", lang: Lang): string {
   if (status === "escalated") {
     return lang === "zh"
-      ? "多謝你嘅報到！我哋會安排護士今日跟進，亦會通知你嘅家人。🙏"
-      : "Thank you for checking in! We'll have a nurse follow up today and let your family know. 🙏";
+      ? "多謝你嘅報到。我哋會安排護士今日跟進，亦會通知你嘅家人。"
+      : "Thank you for checking in. We will have a nurse follow up with you today and inform your family.";
   }
   return lang === "zh"
-    ? "多謝你嘅報到！今日嘅報到完成，一切正常。💚"
-    : "Thank you! Your check-in is complete and everything looks fine today. 💚";
+    ? "多謝你嘅報到。今日嘅報到已完成，各項指標都在正常範圍。"
+    : "Thank you. Your check-in is complete and your readings are within the expected range today.";
 }
 
 /** Closing message written by Claude in the patient's language. Falls back to
@@ -93,7 +97,7 @@ export async function generateConfirmation(
       system: [
         {
           type: "text",
-          text: `You are CareLoop, a warm daily check-in assistant on WhatsApp for an elderly Hong Kong patient. Write ONE short closing message (1-2 sentences), caring and human, in ${langName}. No diagnosis, no medical advice, no medication instructions. Output only the message.`,
+          text: `You are CareLoop, a daily check-in assistant on WhatsApp for an elderly Hong Kong patient. Write ONE short closing message (1-2 sentences): calm, warm, and PROFESSIONAL — a healthcare check-in, not a casual chat. NO emojis. No effusive or over-cheerful language, no false reassurance, no diagnosis, no medical advice, no medication instructions. Write in ${langName}. Output only the message.`,
         },
       ],
       messages: [{ role: "user", content: `Patient: ${patientName}. ${situation}` }],
