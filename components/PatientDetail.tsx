@@ -14,14 +14,16 @@ import {
   Pill,
   Activity,
   CheckCircle2,
+  MessageCircle,
 } from "lucide-react";
+import { toast } from "sonner";
 import { TrendChart, type ChartRow } from "@/components/charts/TrendChart";
 import { RiskCard } from "@/components/RiskCard";
 import { RiskBadge } from "@/components/RiskBadge";
 import { AuditDrawer } from "@/components/AuditDrawer";
-import { CheckInSimulator } from "@/components/CheckInSimulator";
 import { CsvImport } from "@/components/CsvImport";
 import { CaregiverAlert } from "@/components/CaregiverAlert";
+import { ConversationPanel } from "@/components/ConversationPanel";
 import { WeeklySummaryPanel } from "@/components/WeeklySummaryPanel";
 import { FhirExportPanel } from "@/components/FhirExportPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -37,6 +39,7 @@ import { useApp } from "@/components/AppProvider";
 import { api } from "@/lib/api";
 import { formatDay } from "@/lib/format";
 import type { DailyCheckIn, PatientTimeline } from "@/lib/types";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function PatientDetail({
@@ -74,6 +77,21 @@ export function PatientDetail({
   const trendRows: ChartRow[] = risk_trend.map((t) => ({ date: t.date, score: t.score }));
   const stepsThreshold = Math.round(patient.baseline_steps * 0.6);
 
+  async function sendCheckin() {
+    try {
+      const res = await fetch("/api/agent/send-checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patientId }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(data.error ?? "Failed to send");
+      toast.success(`Daily check-in sent to ${patient.name}'s WhatsApp`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not send check-in");
+    }
+  }
+
   return (
     <div className="space-y-5">
       <Link
@@ -99,7 +117,9 @@ export function PatientDetail({
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <CheckInSimulator patientId={patientId} onSubmitted={handleChanged} />
+            <Button variant="outline" size="sm" onClick={sendCheckin} className="gap-1.5">
+              <MessageCircle className="size-4" /> Send check-in
+            </Button>
             <CsvImport patientId={patientId} onImported={handleChanged} />
             <AuditDrawer patientId={patientId} />
           </div>
@@ -132,6 +152,11 @@ export function PatientDetail({
             </div>
           )}
         </div>
+      </div>
+
+      {/* WhatsApp conversation — live thread + extraction */}
+      <div className="cl-rise" style={{ animationDelay: "150ms" }}>
+        <ConversationPanel patientId={patientId} onActivity={handleChanged} />
       </div>
 
       {/* Secondary detail behind tabs */}

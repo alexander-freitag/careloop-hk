@@ -1,0 +1,5 @@
+{
+  "crons": [
+    { "path": "/api/agent/send-checkin", "schedule": "0 0 * * *" }
+  ]
+}

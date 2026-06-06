@@ -139,7 +139,25 @@ describe("risk engine — spec test cases", () => {
     );
     const r = evaluateRisk(p, vitals, checkins);
     expect(r.severity).toBe("escalate");
-    expect(codes(r)).toEqual(["HF-001", "HF-002"]);
+    expect(codes(r)).toEqual(["HF-001", "HF-002", "SYM-001"]);
+  });
+
+  it("Reported symptoms without weight gain → review_today, SYM-001", () => {
+    const p = patient({ conditions: ["COPD"], baseline_steps: 2800 });
+    const vitals = vitalsFrom(p.id, [
+      { date: D[0], weight: 58, sys: 128, dia: 78, hr: 76, steps: 2800 },
+      { date: D[1], weight: 58, sys: 128, dia: 78, hr: 76, steps: 2800 },
+      { date: D[2], weight: 58.1, sys: 128, dia: 78, hr: 76, steps: 2800 },
+      { date: D[3], weight: 58, sys: 128, dia: 78, hr: 76, steps: 2800 },
+    ]);
+    const checkins = D.map((d, i) =>
+      i === D.length - 1
+        ? checkin(p.id, d, { shortness_of_breath: true, swelling: true })
+        : checkin(p.id, d),
+    );
+    const r = evaluateRisk(p, vitals, checkins);
+    expect(r.severity).toBe("review_today");
+    expect(codes(r)).toContain("SYM-001");
   });
 
   it("High BP: systolic > 180 → escalate, BP-001", () => {

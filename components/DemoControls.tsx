@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { RotateCcw, Zap, FileText } from "lucide-react";
+import { RotateCcw, Zap, FileText, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/components/AppProvider";
@@ -36,11 +36,33 @@ export function DemoControls() {
     }
   }
 
+  async function sendCheckin() {
+    try {
+      const res = await fetch("/api/agent/send-round", { method: "POST" });
+      const data = (await res.json().catch(() => ({}))) as {
+        sent?: number;
+        total?: number;
+        error?: string;
+      };
+      if (!res.ok) throw new Error(data.error ?? "Failed to send");
+      if (!data.total) {
+        toast.info("No patient WhatsApp numbers known yet — message the CareLoop number first.");
+      } else {
+        toast.success(`Daily check-in sent to ${data.sent}/${data.total} patient(s).`);
+      }
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not send check-in");
+    }
+  }
+
   return (
     <div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-border bg-card p-1.5">
       <span className="px-1.5 text-xs font-medium text-muted-foreground">Demo</span>
       <Button variant="outline" size="sm" onClick={resetDemo} disabled={busy} className="gap-1.5">
         <RotateCcw className="size-4" /> Reset
+      </Button>
+      <Button variant="outline" size="sm" onClick={sendCheckin} disabled={busy} className="gap-1.5">
+        <MessageCircle className="size-4" /> Daily check-in
       </Button>
       <Button
         variant="outline"
