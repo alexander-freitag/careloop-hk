@@ -1,4 +1,4 @@
-# CareLoop HK — Judge Q&A
+# CareLoop — Judge Q&A
 
 ### Is this diagnosis?
 

@@ -1,7 +1,7 @@
-# HONESTY.md — CareLoop HK
+# HONESTY.md — CareLoop
 
-CareLoop HK is a **hackathon prototype** for remote chronic-care monitoring among
-elderly patients in Hong Kong. It uses daily check-ins, vital/wearable sample
+CareLoop is a **prototype** for remote chronic-care monitoring among elderly
+patients in Hong Kong. It uses daily check-ins, vital/wearable sample
 data, and **deterministic** escalation rules to identify patients who may need
 nurse review.
 
@@ -77,7 +77,7 @@ These thresholds are for demonstration and are **not clinically validated**.
 
 ## Safety boundaries
 
-- CareLoop HK is **not a medical device**.
+- CareLoop is **not a medical device**.
 - It does **not** diagnose disease or prescribe treatment.
 - It does **not** replace a doctor, nurse, pharmacist, or emergency service.
 - All alerts are monitoring prompts for **professional review**.

@@ -52,6 +52,7 @@ interface DayRow {
   ch: boolean; // chest discomfort
   mood: string;
   note?: string;
+  skipCheckin?: boolean; // patient missed the daily check-in that day
 }
 
 interface PatientDef {
@@ -116,7 +117,7 @@ const PATIENT_DEFS: PatientDef[] = [
       { w: 70.0, sys: 133, dia: 81, hr: 74, steps: 3000, sleep: 6.5, med: true, sob: false, sw: false, dz: false, ch: false, mood: "ok" },
       { w: 69.8, sys: 132, dia: 80, hr: 76, steps: 2400, sleep: 6.4, med: true, sob: false, sw: false, dz: false, ch: false, mood: "a bit tired" },
       { w: 69.9, sys: 134, dia: 82, hr: 77, steps: 2200, sleep: 6.2, med: true, sob: false, sw: false, dz: false, ch: false, mood: "tired", note: "Staying in more, knees sore." },
-      { w: 70.0, sys: 133, dia: 81, hr: 76, steps: 2000, sleep: 6.3, med: true, sob: false, sw: false, dz: false, ch: false, mood: "tired" },
+      { w: 70.0, sys: 133, dia: 81, hr: 76, steps: 2000, sleep: 6.3, med: true, sob: false, sw: false, dz: false, ch: false, mood: "tired", skipCheckin: true },
     ],
   },
   {
@@ -236,19 +237,21 @@ export function buildSeed(): SeedDataset {
         vital(pid, date, "steps", row.steps),
         vital(pid, date, "sleep_hours", row.sleep),
       );
-      checkins.push({
-        id: `checkin-${shortId(pid)}-${date}`,
-        patient_id: pid,
-        date,
-        mood: row.mood,
-        shortness_of_breath: row.sob,
-        swelling: row.sw,
-        dizziness: row.dz,
-        chest_discomfort: row.ch,
-        medication_taken: row.med,
-        free_text_note: row.note ?? null,
-        source: "simulated_call",
-      });
+      if (!row.skipCheckin) {
+        checkins.push({
+          id: `checkin-${shortId(pid)}-${date}`,
+          patient_id: pid,
+          date,
+          mood: row.mood,
+          shortness_of_breath: row.sob,
+          swelling: row.sw,
+          dizziness: row.dz,
+          chest_discomfort: row.ch,
+          medication_taken: row.med,
+          free_text_note: row.note ?? null,
+          source: "simulated_call",
+        });
+      }
     });
   }
 

@@ -1,10 +1,10 @@
-# CareLoop HK
+# CareLoop
 
 **Remote chronic-care monitoring for elderly Hong Kong patients — between clinic visits.**
 
 > CareLoop watches the gaps between visits.
 
-CareLoop HK turns daily Cantonese check-ins, wearable/vital data, and **deterministic** escalation
+CareLoop turns daily Cantonese check-ins, wearable/vital data, and **deterministic** escalation
 rules into a nurse dashboard, caregiver alerts, weekly clinician summaries, and FHIR-style exports.
 
 It is **not** an AI doctor. It does **not** diagnose or prescribe. It flags monitoring risks for
@@ -135,7 +135,7 @@ variables to enable AI-assisted summary wording (optional).
 
 ## Safety & honesty
 
-CareLoop HK is monitoring support — **not** a medical device, diagnosis, or treatment tool. See
+CareLoop is monitoring support — **not** a medical device, diagnosis, or treatment tool. See
 [`HONESTY.md`](./HONESTY.md) and the in-app **Honesty** page for exactly what is real vs mocked.
 
 All demo data is synthetic. No secrets are committed.

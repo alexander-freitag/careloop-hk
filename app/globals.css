@@ -46,7 +46,7 @@
   --radius-2xl: calc(var(--radius) * 1.6);
 }
 
-/* CareLoop HK — clean clinical light theme: soft blue/green healthcare accents */
+/* CareLoop — clean clinical light theme: soft blue/green healthcare accents */
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;

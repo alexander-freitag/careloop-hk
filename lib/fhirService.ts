@@ -174,7 +174,9 @@ export function buildFhirBundle(timeline: PatientTimeline): Json {
 
   return {
     resourceType: "Bundle",
+    id: `bundle-${short}`,
     type: "collection",
+    timestamp: new Date().toISOString(),
     meta: { tag: [{ system: "https://careloop.hk/fhir", code: "demo", display: "Synthetic demo data" }] },
     entry: entries,
   };

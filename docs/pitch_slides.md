@@ -1,4 +1,4 @@
-# CareLoop HK — Pitch Slides
+# CareLoop — Pitch Slides
 
 Six clean slides. Tagline: **CareLoop watches the gaps between visits.**
 
@@ -6,7 +6,7 @@ Six clean slides. Tagline: **CareLoop watches the gaps between visits.**
 
 ## Slide 1 — Title
 
-# CareLoop HK
+# CareLoop
 ### Remote chronic-care monitoring for elderly patients between visits
 
 Daily check-ins, vital signals, rule-based escalation, and nurse review.

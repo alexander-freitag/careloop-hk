@@ -1,4 +1,4 @@
-# CareLoop HK — 2-Minute Business Video Script
+# CareLoop — 2-Minute Business Video Script
 
 Read at a calm, confident pace. ~280 words ≈ 2 minutes.
 
@@ -10,7 +10,7 @@ enough to seek urgent care.
 
 The dangerous part is the gap between visits.
 
-CareLoop HK monitors that gap. It combines daily Cantonese check-ins, wearable or vital-sign data,
+CareLoop monitors that gap. It combines daily Cantonese check-ins, wearable or vital-sign data,
 and deterministic escalation rules into a nurse dashboard.
 
 It is not an AI doctor. It does not diagnose or prescribe. It flags monitoring risks for nurse or

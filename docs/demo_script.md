@@ -1,4 +1,4 @@
-# CareLoop HK — 3-Minute Demo Script
+# CareLoop — 3-Minute Demo Script
 
 **Before you start:** click **Reset demo** in the header so the demo always begins from the same
 clean state.
@@ -13,7 +13,7 @@ Flow:
 
 ### 0:00–0:20 — Intro
 
-> "CareLoop HK is a remote chronic-care monitoring platform for elderly Hong Kong patients. We focus
+> "CareLoop is a remote chronic-care monitoring platform for elderly Hong Kong patients. We focus
 > first on heart-failure and hypertension patients between clinic visits."
 
 Show the landing page. Click **Start demo**.
